@@ -1,0 +1,86 @@
+@import "styles/mixins";
+
+.header {
+  padding: 30px 0;
+  margin-bottom: 50px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__navigation-list {
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__navigation-list-item:not(:first-child)::before {
+    content: "//";
+    margin: 0 10px;
+    color: $color-accent;
+  }
+
+  &__navigation-link {
+    font-family: $font-accent;
+    color: $color-accent;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &_user {
+      font-family: $font-primary;
+      font-weight: 500;
+      text-transform: lowercase;
+    }
+
+    &[href] {
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:focus,
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__search-form {
+    display: flex;
+    width: 386px;
+  }
+
+  &__search-input {
+    flex-grow: 1;
+    padding: 13px 11px 10px;
+    margin-right: 10px;
+    border-radius: 8px;
+    background-color: $color-grey-light;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: $color-black;
+
+    &:focus {
+      outline: 2px solid $color-accent;
+    }
+  }
+
+  &__search-button {
+    padding: 11px 14px;
+    background-color: $color-accent;
+    border-radius: 8px;
+    font-family: $font-accent;
+    font-size: inherit;
+    line-height: inherit;
+    color: $color-grey-light;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:focus,
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
