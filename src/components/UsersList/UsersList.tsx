@@ -1,22 +1,34 @@
 import React from 'react';
-import s from './UsersList.module.scss';
 
-const UsersList: React.FC = () => {
+import { UsersItemApi } from 'types/users';
+
+import s from './UsersList.module.scss';
+import { getPluralized } from 'utils/getPluralized';
+import { Link } from 'react-router-dom';
+
+export type UsersListProps = {
+  users: UsersItemApi[];
+};
+
+const getPluralizedRepos = (reposCount: number): string =>
+  getPluralized(reposCount, 'репозиторий', 'репозитория', 'репозиториев');
+
+const UsersList: React.FC<UsersListProps> = ({ users }) => {
   return (
     <div className={s['users-list']}>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-        <section className={s['users-list__item']} key={item}>
+      {users.map((user) => (
+        <section className={s['users-list__item']} key={user.id}>
           <div className={s['users-list__image-container']}>
-            <img className={s['users-list__image']} src="http://placeimg.com/640/480/any" alt="defunkt profile photo" />
+            <img className={s['users-list__image']} src={user.avatar_url} alt={`${user.login} avatar`} />
           </div>
           <div>
             <h2>
-              <a href="/src/pages" className="link">
-                defunkt
-              </a>
-              , 15 репозиториев
+              <Link className="link" to={`/users/${user.login}`}>
+                {user.login}
+              </Link>
+              {user.public_repos && <>, {getPluralizedRepos(user.public_repos)}</>}
             </h2>
-            <p className={s['users-list__text']}>Название организации</p>
+            {user.company && <p className={s['users-list__text']}>{user.company}</p>}
           </div>
         </section>
       ))}

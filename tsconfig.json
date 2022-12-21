@@ -11,7 +11,8 @@
       "config/*": ["config/*"],
       "types/*": ["types/*"],
       "utils/*": ["utils/*"],
-      "styles/*": ["styles/*"]
+      "styles/*": ["styles/*"],
+      "hooks/*": ["hooks/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

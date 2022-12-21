@@ -1,25 +1,40 @@
 import React from 'react';
 
 import s from './UserProfilePage.module.scss';
+import { useParams } from 'react-router-dom';
+import { useUserData } from 'hooks/useUserData';
 
 // todo: container, info & repos components
 const UserProfilePage: React.FC = () => {
+  const { id } = useParams();
+  const { user } = useUserData(id || '');
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="container">
       <section className={s['user-profile']}>
         <div className={s['user-profile__image-container']}>
-          <img className={s['user-profile__image']} src="http://placeimg.com/640/480/any" alt="defunkt profile photo" />
+          <img className={s['user-profile__image']} src={user.avatar_url} alt={`${user.login} avatar`} />
         </div>
         <div>
           <h1 className={s['user-profile__title']}>
-            Chris Wanstrath, <span className={s['user-profile__accent']}>defunct</span>
+            {user.name && <>{user.name},</>} <span className={s['user-profile__accent']}>{user.login}</span>
           </h1>
           <p className={s['user-profile__text']}>
-            <span className={s['user-profile__accent']}>21.3k</span> followers ·{' '}
-            <span className={s['user-profile__accent']}>210</span> following ·{' '}
-            <a href="pages/UserProfilePage/UserProfilePage" className="link">
-              http://chriswanstrath.com/
-            </a>
+            <span className={s['user-profile__accent']}>{user.followers}</span> followers ·{' '}
+            <span className={s['user-profile__accent']}>{user.following}</span> following
+            {user.blog && (
+              <>
+                {' '}
+                ·{' '}
+                <a href={user.blog} className="link">
+                  {user.blog}
+                </a>
+              </>
+            )}
           </p>
         </div>
       </section>
@@ -27,20 +42,25 @@ const UserProfilePage: React.FC = () => {
       <section className={s['repository-list']}>
         <div className={s['repository-list__header']}>
           <h2 className={s['repository-list__title']}>Репозитории</h2>
-          <a href="https://github.com/defunkt?tab=repositories" className="link" target="_blank" rel="noreferrer">
+          <a
+            href={`https://github.com/${user.login}?tab=repositories`}
+            className="link"
+            target="_blank"
+            rel="noreferrer"
+          >
             Все репозитории
           </a>
         </div>
 
         <div className={s['repository-list__container']}>
-          {[1, 2, 3, 4, 5].map((item) => (
-            <section className={s['repository-list__item']} key={item}>
+          {user.repos.map((repo) => (
+            <section className={s['repository-list__item']} key={repo.id}>
               <h3 className={s['repository-list__item-title']}>
                 <a href="/src/pages" className="link">
-                  body_matcher
+                  {repo.name}
                 </a>
               </h3>
-              <p className={s['repository-list__item-text']}>Simplify your view testing. Forget assert_select.</p>
+              {repo.description && <p className={s['repository-list__item-text']}>{repo.description}</p>}
             </section>
           ))}
         </div>

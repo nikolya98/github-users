@@ -1,18 +1,31 @@
 import React from 'react';
 import cn from 'classnames';
+import { useNavigate, createSearchParams, Link, useSearchParams } from 'react-router-dom';
 
 import { Container } from '../Container';
 
 import s from './Header.module.scss';
 
 const Header: React.FC = () => {
-  const [searchValue, setSearchValue] = React.useState('');
+  const navigate = useNavigate();
+  const [search] = useSearchParams();
+  const [searchValue, setSearchValue] = React.useState(() => search.get('query') || '');
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!searchValue.trim().length) {
       return;
     }
+
+    const search = createSearchParams({
+      query: searchValue.trim(),
+    }).toString();
+
+    navigate({
+      pathname: '/search', // todo: вынести
+      search,
+    });
   };
 
   return (
@@ -21,9 +34,9 @@ const Header: React.FC = () => {
         <nav>
           <ul className={s['header__navigation-list']}>
             <li className={s['header__navigation-list-item']}>
-              <a href="/src/pages" className={s['header__navigation-link']}>
+              <Link to="/users" className={s['header__navigation-link']}>
                 Пользователи гитхаба
-              </a>
+              </Link>
             </li>
             <li className={s['header__navigation-list-item']}>
               <a className={cn(s['header__navigation-link'], s['header__navigation-link_user'])}>defunct</a>

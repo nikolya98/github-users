@@ -10,6 +10,7 @@
   }
 
   &__image-container {
+    flex-shrink: 0;
     position: relative;
     width: 64px;
     height: 64px;

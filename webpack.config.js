@@ -49,7 +49,7 @@ const getRules = () => [
 const ALIASES_EXTENSIONS = ['.js', '.ts', '.tsx', '.scss', '...'];
 
 /** Алиасы для сокращения путей при импортах */
-const ALIASES = ['pages', 'components', 'styles', 'types', 'config', 'utils'];
+const ALIASES = ['pages', 'components', 'styles', 'types', 'config', 'utils', 'hooks'];
 
 /** Функция, которая возвращает настройки резолвинга алиасов */
 const getAliases = () => ({
