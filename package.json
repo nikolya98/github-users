@@ -10,7 +10,8 @@
     "prettier": "prettier --check \"**/*.{js,ts,tsx,scss}\"",
     "prettier:fix": "prettier --write \"**/*.{js,ts,tsx,scss}\"",
     "ts-check": "tsc --noEmit",
-    "precommit": "yarn ts-check && lint-staged"
+    "precommit": "yarn ts-check && lint-staged",
+    "check-quality": "yarn ts-check && yarn eslint && yarn stylelint && yarn prettier"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": ["eslint", "prettier"],
