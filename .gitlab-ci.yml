@@ -32,9 +32,19 @@ build:
     - merge_requests
 
 deploy:
+  image: alpine:latest
   stage: deploy
+  before_script:
+    - apk update && apk add rsync openssh
+    - mkdir ~/.ssh
+    - chmod 600 ~/.ssh
+    - echo "$SSH_KEY" >> ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 600 ~/.ssh/known_hosts
+  resource_group: production
   script:
-    - echo "deploy"
+    - rsync -a --delete public/ $VPS_PATH
   only:
     - main
   when: manual
