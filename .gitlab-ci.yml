@@ -44,7 +44,7 @@ deploy:
     - chmod 600 ~/.ssh/known_hosts
   resource_group: production
   script:
-    - rsync -a --delete public/ $VPS_PATH
+    - rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete public/ $VPS_PATH
   only:
     - main
   when: manual
