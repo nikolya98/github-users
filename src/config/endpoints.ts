@@ -1,6 +1,7 @@
 export const BASE_URL = 'https://api.github.com';
 
-export const ENDPOINT_MAP = {
+// Эндопоинты апишки todo: type it
+export const ENDPOINTS_MAP = {
   users: '/users',
   user: (id: string) => `/users/${id}`,
   search: '/search/users',

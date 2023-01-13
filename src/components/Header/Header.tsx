@@ -1,7 +1,9 @@
-import React from 'react';
 import cn from 'classnames';
-import { useNavigate, createSearchParams, Link, useSearchParams } from 'react-router-dom';
+import * as React from 'react';
+import { useNavigate, createSearchParams, Link, useSearchParams, useParams, useLocation } from 'react-router-dom';
 
+import { ROUTES } from 'config/routes';
+import { getGithubUserLink } from 'utils/getGithubUserLink';
 import { Container } from '../Container';
 
 import s from './Header.module.scss';
@@ -14,19 +16,25 @@ const Header: React.FC = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!searchValue.trim().length) {
+    if (!searchValue.length) {
       return;
     }
 
     const search = createSearchParams({
-      query: searchValue.trim(),
+      query: searchValue,
     }).toString();
 
     navigate({
-      pathname: '/search', // todo: вынести
+      pathname: ROUTES.search.getPath(),
       search,
     });
   };
+
+  // Если есть id - то мы на странице пользователя
+  const { id } = useParams();
+  const { pathname } = useLocation();
+
+  const LinkElement = pathname !== ROUTES.users.getPath() ? Link : 'span';
 
   return (
     <header className={s.header}>
@@ -34,13 +42,25 @@ const Header: React.FC = () => {
         <nav>
           <ul className={s['header__navigation-list']}>
             <li className={s['header__navigation-list-item']}>
-              <Link to="/users" className={s['header__navigation-link']}>
+              <LinkElement to={ROUTES.users.getPath()} className={s['header__navigation-link']}>
                 Пользователи гитхаба
-              </Link>
+              </LinkElement>
             </li>
-            <li className={s['header__navigation-list-item']}>
-              <a className={cn(s['header__navigation-link'], s['header__navigation-link_user'])}>defunct</a>
-            </li>
+            {id && (
+              <li className={s['header__navigation-list-item']}>
+                <a
+                  className={cn(s['header__navigation-link'], s['header__navigation-link_user'])}
+                  href={getGithubUserLink(id)}
+                >
+                  {id}
+                </a>
+              </li>
+            )}
+            {pathname === ROUTES.search.getPath() && (
+              <li className={s['header__navigation-list-item']}>
+                <span className={cn(s['header__navigation-link'])}>Поиск</span>
+              </li>
+            )}
           </ul>
         </nav>
 
@@ -51,7 +71,7 @@ const Header: React.FC = () => {
               className={s['header__search-input']}
               placeholder="Поиск пользователя"
               value={searchValue}
-              onChange={(event) => setSearchValue(event.currentTarget.value)}
+              onChange={(event) => setSearchValue(event.currentTarget.value.trim())}
             />
             <button type="submit" className={s['header__search-button']}>
               Найти

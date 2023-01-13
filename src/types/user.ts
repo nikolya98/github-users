@@ -1,4 +1,6 @@
-export type UserApi = {
+import { NormalizeApi } from './common';
+
+export type BaseUserApi = {
   id: number;
   name: string;
   login: string;
@@ -14,6 +16,8 @@ export type RepoApi = {
   description: string;
 };
 
-export type User = UserApi & {
+export type UserApi = BaseUserApi & {
   repos: RepoApi[];
 };
+
+export type User = NormalizeApi<UserApi>;

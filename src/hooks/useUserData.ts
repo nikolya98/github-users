@@ -1,9 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Meta } from 'types/meta';
 import { fetchData } from 'utils/fetchData';
-import { ENDPOINT_MAP } from 'config/endpoints';
-import { RepoApi, User, UserApi } from 'types/user';
+import { ENDPOINTS_MAP } from 'config/endpoints';
+import { RepoApi, User, BaseUserApi } from 'types/user';
+import { normalizeUserApi } from 'utils/normalize';
 
 export const useUserData = (id: string) => {
   const [meta, setMeta] = React.useState<Meta>(Meta.initial);
@@ -13,8 +14,8 @@ export const useUserData = (id: string) => {
     (async () => {
       setMeta(Meta.loading);
 
-      const { data: user, isError } = await fetchData<UserApi>({
-        endpoint: ENDPOINT_MAP.user(id),
+      const { data: baseUserData, isError } = await fetchData<BaseUserApi>({
+        endpoint: ENDPOINTS_MAP.user(id),
       });
 
       if (isError) {
@@ -23,15 +24,17 @@ export const useUserData = (id: string) => {
       }
 
       const { data: repos } = await fetchData<RepoApi[]>({
-        endpoint: ENDPOINT_MAP.repos(id),
+        endpoint: ENDPOINTS_MAP.repos(id),
         query: { per_page: 6 },
       });
 
       setMeta(Meta.success);
-      setUser({
-        ...user,
-        repos: repos || [],
-      });
+      setUser(
+        normalizeUserApi({
+          ...baseUserData,
+          repos: repos || [],
+        })
+      );
     })();
   }, [id]);
 

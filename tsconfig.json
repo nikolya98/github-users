@@ -3,7 +3,7 @@
     "target": "es6",
     "jsx": "react",
     "module": "ES6",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "baseUrl": "./src",
     "paths": {
       "pages/*": ["pages/*"],

@@ -1,11 +1,12 @@
-import React from 'react';
+import * as React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { UsersList } from 'components/UsersList';
 import { useUsersData } from 'hooks/useUsersData';
-import { useSearchParams } from 'react-router-dom';
 
 const UsersSearchPage: React.FC = () => {
   const [search] = useSearchParams();
+
   const query = search.get('query') || '';
   const { users } = useUsersData(query);
 
@@ -17,4 +18,4 @@ const UsersSearchPage: React.FC = () => {
   );
 };
 
-export default UsersSearchPage;
+export default React.memo(UsersSearchPage);
