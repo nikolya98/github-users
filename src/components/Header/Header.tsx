@@ -1,10 +1,11 @@
 import cn from 'classnames';
 import * as React from 'react';
-import { useNavigate, createSearchParams, Link, useSearchParams, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, createSearchParams, useSearchParams, useParams, useLocation } from 'react-router-dom';
 
 import { ROUTES } from 'config/routes';
 import { getGithubUserLink } from 'utils/getGithubUserLink';
 import { Container } from '../Container';
+import { Link } from '../Link';
 
 import s from './Header.module.scss';
 
@@ -42,18 +43,19 @@ const Header: React.FC = () => {
         <nav>
           <ul className={s['header__navigation-list']}>
             <li className={s['header__navigation-list-item']}>
-              <LinkElement to={ROUTES.users.getPath()} className={s['header__navigation-link']}>
+              <LinkElement element="link" className={s['header__navigation-link']} to={ROUTES.users.getPath()}>
                 Пользователи гитхаба
               </LinkElement>
             </li>
             {id && (
               <li className={s['header__navigation-list-item']}>
-                <a
+                <Link
+                  element="a"
                   className={cn(s['header__navigation-link'], s['header__navigation-link_user'])}
                   href={getGithubUserLink(id)}
                 >
                   {id}
-                </a>
+                </Link>
               </li>
             )}
             {pathname === ROUTES.search.getPath() && (

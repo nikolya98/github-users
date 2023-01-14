@@ -1,0 +1,38 @@
+@import "styles/mixins";
+
+.repository-list {
+  &__header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  &__title {
+    font-family: $font-accent;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  &__item {
+    padding: 16px;
+    border: 1px solid $color-grey-light;
+    border-radius: 8px;
+  }
+
+  &__item-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  &__item-text {
+    font-size: 13px;
+  }
+}

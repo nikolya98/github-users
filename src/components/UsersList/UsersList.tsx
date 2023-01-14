@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import { UsersItem } from 'types/users';
 import { getPluralized } from 'utils/getPluralized';
 import { ROUTES } from 'config/routes';
+import { Link } from 'components/Link';
 
 import s from './UsersList.module.scss';
 
@@ -24,7 +24,7 @@ const UsersList: React.FC<UsersListProps> = ({ users }) => {
           </div>
           <div>
             <h2>
-              <Link className="link" to={ROUTES.user.getPath(user.login)}>
+              <Link element="link" to={ROUTES.user.getPath(user.login)}>
                 {user.login}
               </Link>
               {user.publicRepos && <>, {getPluralizedRepos(user.publicRepos)}</>}

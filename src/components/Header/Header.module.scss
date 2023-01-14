@@ -22,11 +22,13 @@
     color: $color-accent;
   }
 
-  &__navigation-link {
+  // перебиваем специфичность стилей от Link
+  & &__navigation-link {
     font-family: $font-accent;
     color: $color-accent;
     font-weight: bold;
     text-transform: uppercase;
+    text-decoration: unset;
 
     &_user {
       font-family: $font-primary;

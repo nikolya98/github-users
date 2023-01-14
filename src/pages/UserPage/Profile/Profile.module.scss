@@ -29,6 +29,11 @@
 
   &__text {
     margin-top: 10px;
+
+    // middot между дочерними элементами
+    & > *:not(:last-child)::after {
+      content: " \00B7  ";
+    }
   }
 
   &__accent {
@@ -37,41 +42,9 @@
     text-transform: lowercase;
     font-weight: 500;
   }
-}
 
-.repository-list {
-  &__header {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  &__title {
-    font-family: $font-accent;
-    font-size: 30px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  &__container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  &__item {
-    padding: 16px;
-    border: 1px solid $color-grey-light;
-    border-radius: 8px;
-  }
-
-  &__item-title {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-
-  &__item-text {
-    font-size: 13px;
+  // Перебиваем стили Link
+  & &__link {
+    text-decoration: unset;
   }
 }

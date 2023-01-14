@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import Root from 'pages/Root';
 import UsersPage from 'pages/UsersPage/UsersPage';
-import UserProfilePage from 'pages/UserProfilePage';
+import UserProfilePage from 'pages/UserPage';
 import UsersSearchPage from 'pages/UsersSearchPage';
 import { ROUTES } from 'config/routes';
 
