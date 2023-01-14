@@ -12,6 +12,10 @@ export type ReposListProps = {
 };
 
 const ReposList: React.FC<ReposListProps> = ({ user }) => {
+  if (user.repos.length === 0) {
+    return null;
+  }
+
   return (
     <section className={s['repository-list']}>
       <div className={s['repository-list__header']}>
